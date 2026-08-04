@@ -4,8 +4,9 @@ public:
        int n = s.length();
        string ans = "";
 
-       reverse(s.begin(),s.end());
+       reverse(s.begin(),s.end()); //reverse the string
 
+       //Reverse the individual characters
        for(int i=0 ; i<n ; i++){
          string word = "";
          while(i<n && s[i] != ' '){
@@ -14,6 +15,7 @@ public:
          }
 
          reverse(word.begin(),word.end());
+         //Adding the strings
          if(word.length() > 0){
             ans += " " + word;
          }
