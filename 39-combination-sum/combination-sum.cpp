@@ -1,38 +1,37 @@
 class Solution {
 public:
-    void solve(vector<int>& candidates, int target, int start,
-               vector<int>& current, vector<vector<int>>& ans) {
+    void getAllCombin(vector<int>& arr, int idx, int tar,
+                      vector<vector<int>>& ans, vector<int>& combin) {
 
-        // Base case
-        if (target == 0) {
-            ans.push_back(current);
+        // Target achieved
+        if (tar == 0) {
+            ans.push_back(combin);
             return;
         }
 
-        for (int i = start; i < candidates.size(); i++) {
-
-            // If current number is greater than target, skip it
-            if (candidates[i] > target)
-                continue;
-
-            // Choose
-            current.push_back(candidates[i]);
-
-            // i, not i+1 because we can reuse the same element
-            solve(candidates, target - candidates[i], i,
-                  current, ans);
-
-            // Backtrack
-            current.pop_back();
+        // Invalid
+        if (idx == arr.size() || tar < 0) {
+            return;
         }
+
+        // TAKE
+        combin.push_back(arr[idx]);
+
+        // Same index because we can reuse the number
+        getAllCombin(arr, idx, tar - arr[idx], ans, combin);
+
+        // Backtrack
+        combin.pop_back();
+
+        // SKIP
+        getAllCombin(arr, idx + 1, tar, ans, combin);
     }
 
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-
+    vector<vector<int>> combinationSum(vector<int>& arr, int tar) {
         vector<vector<int>> ans;
-        vector<int> current;
+        vector<int> combin;
 
-        solve(candidates, target, 0, current, ans);
+        getAllCombin(arr, 0, tar, ans, combin);
 
         return ans;
     }
