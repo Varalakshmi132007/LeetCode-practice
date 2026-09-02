@@ -1,51 +1,38 @@
 class Solution {
 public:
 
-    bool isPalindrome(string s, int start, int end) {
-        while(start <= end) {
-            if(s[start] != s[end]) {
-                return false;
-            }
-            start++;
-            end--;
-        }
-        return true;
+    bool isPalin(string s) {
+        string s2 = s;
+        reverse(s2.begin(),s2.end());
+
+        return s==s2;
     }
+    
+    void getAllParts(string s,vector<string> &partitions,vector<vector<string>> &ans){
+    
+    if(s.size() == 0){
+        ans.push_back(partitions);
+        return;
+    } 
 
-    void solve(string s, vector<vector<string>>& ans,
-               vector<string>& part, int index) {
+    for(int i=0 ; i<s.size() ; i++){
+        string part = s.substr(0,i+1);
 
-        // Base case
-        if(index == s.size()) {
-            ans.push_back(part);
-            return;
-        }
-
-        // Try all possible partitions
-        for(int i = index; i < s.size(); i++) {
-
-            // Check if current substring is palindrome
-            if(isPalindrome(s, index, i)) {
-
-                // Add substring
-                part.push_back(s.substr(index, i - index + 1));
-
-                // Recursion
-                solve(s, ans, part, i + 1);
-
-                // Backtracking
-                part.pop_back();
-            }
+        if(isPalin(part)){
+            partitions.push_back(part);
+            getAllParts(s.substr(i+1),partitions,ans);
+            partitions.pop_back();
         }
     }
+    
+    }
+    
 
     vector<vector<string>> partition(string s) {
 
         vector<vector<string>> ans;
-        vector<string> part;
-
-        solve(s, ans, part, 0);
-
+        vector<string> partitions;
+        getAllParts(s,partitions,ans);
         return ans;
     }
 };
