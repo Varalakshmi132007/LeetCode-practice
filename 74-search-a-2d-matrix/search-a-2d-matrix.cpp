@@ -24,11 +24,14 @@ public:
         while(startRow<=endRow){
             int mid = startRow + (endRow - startRow)/2;
             if(target >= mat[mid][0] && target <= mat[mid][n-1]){
+                //found the row =>BS on this row
                 return searchInMatrix(mat, target, mid);
             }
             else if(target > mat[mid][n-1]){
+                //down =>right
               startRow = mid + 1;
             }else{
+                //up => left
               endRow = mid-1;
             }
         }
