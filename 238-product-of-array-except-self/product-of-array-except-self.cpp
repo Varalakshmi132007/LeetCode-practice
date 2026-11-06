@@ -17,6 +17,6 @@ public:
             ans[i] *= suffix;
         }
         return ans;
-
+ 
     }
 };
